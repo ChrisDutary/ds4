@@ -12,18 +12,18 @@ namespace Laboratorio_8._1
 
         public int Edad;
 
-        public int NIF;
+        public string NIF;
 
-        void Cumpleamos()
+        void Cumpleanos()
         {
             Edad++;
         }
 
-        public Persona(string nombre, int edad, int nIF)
+        public Persona(string nombre, int edad, string nif)
         {
             Nombre = nombre;
             Edad = edad;
-            NIF = nIF;
+            NIF = nif;
         }
     }
 }
