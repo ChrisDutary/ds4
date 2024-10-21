@@ -8,4 +8,4 @@ FROM Products P
 FULL JOIN Suppliers S
 ON P.SupplierID=S.SupplierID
 
-
+select ProductName from [dbo].[Products]
