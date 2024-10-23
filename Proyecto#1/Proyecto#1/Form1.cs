@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
+
 
 namespace Proyecto_1
 {
@@ -17,6 +19,8 @@ namespace Proyecto_1
         string operation = "";
         bool isOperationPerformed = false;
         bool isNegative = false;
+        string connectionString = "Data Source=DESKTOP-539IR1D\\SQLEXPRESS;Initial Catalog=CalculadoraDB;Integrated Security=True;Encrypt=True;TrustServerCertificate=True;";
+
 
 
         public Form1()
@@ -69,13 +73,13 @@ namespace Proyecto_1
             Button button = (Button)sender;
             operation = button.Text;
 
-            // Verificar si no hay ningún número ingresado y el operador es "-"
+            
             if (txtNum.Text == "0" && button.Text == "-")
             {
-                // Permitir el uso de un número negativo
+                
                 txtNum.Text = "-";
                 isOperationPerformed = false;
-                return; // No procesar la operación aún
+                return; 
             }
 
             if (result != 0)
@@ -97,8 +101,8 @@ namespace Proyecto_1
         {
             try
             {
-                string previousText = txtNum.Text; // Guardar el texto actual antes del cálculo
-                bool specialOperation = false; // Bandera para evitar duplicado en ListBox
+                string previousText = txtNum.Text; 
+                bool specialOperation = false; 
 
                 switch (operation)
                 {
@@ -127,25 +131,36 @@ namespace Proyecto_1
                         break;
                     case "x^2":
                         txtNum.Text = Math.Pow(result, 2).ToString();
-                        listBox1.Items.Add(result + " ^2 = " + txtNum.Text); // Solo agregar aquí
-                        specialOperation = true; // Marcar como operación especial
+                        listBox1.Items.Add(result + " ^2 = " + txtNum.Text); 
+                        specialOperation = true; 
                         break;
                     case "√":
                         txtNum.Text = Math.Sqrt(result).ToString();
-                        listBox1.Items.Add("√" + result + " = " + txtNum.Text); // Solo agregar aquí
-                        specialOperation = true; // Marcar como operación especial
+                        listBox1.Items.Add("√" + result + " = " + txtNum.Text); 
+                        specialOperation = true; 
                         break;
                 }
 
-                // Guardar el cálculo en el ListBox solo si no es una operación especial
+                
+                string calculation = $"{result} {operation} {previousText} = {txtNum.Text}";
                 if (!specialOperation)
                 {
-                    string calculation = $"{result} {operation} {previousText} = {txtNum.Text}";
-                    listBox1.Items.Add(calculation); // Agregar el cálculo realizado al ListBox
+                    listBox1.Items.Add(calculation); 
                 }
 
-                result = Double.Parse(txtNum.Text); // Actualizar el resultado
-                label1.Text = ""; // Limpiar la etiqueta de la operación
+                result = Double.Parse(txtNum.Text); 
+                label1.Text = ""; 
+
+   
+                using (SqlConnection con = new SqlConnection(connectionString))
+                {
+                    string query = "INSERT INTO HistorialCalculos (Operacion, Resultado) VALUES (@operacion, @resultado)";
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    cmd.Parameters.AddWithValue("@operacion", calculation);
+                    cmd.Parameters.AddWithValue("@resultado", txtNum.Text);
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
             }
             catch (Exception ex)
             {
@@ -155,23 +170,51 @@ namespace Proyecto_1
 
         private void btnCuadrado_Click(object sender, EventArgs e)
         {
-            operation = "x^2"; // Guardamos la operación
+            operation = "x^2"; 
             label1.Text = txtNum.Text + " ^2";
-            result = Double.Parse(txtNum.Text); // Guardamos el número para la operación
+            result = Double.Parse(txtNum.Text); 
             isOperationPerformed = true;
         }
 
         private void btnRaiz_Click(object sender, EventArgs e)
         {
-            operation = "√"; // Guardamos la operación
+            operation = "√"; 
             label1.Text = "√" + txtNum.Text;
-            result = Double.Parse(txtNum.Text); // Guardamos el número para la operación
+            result = Double.Parse(txtNum.Text); 
             isOperationPerformed = true;
         }
 
-            private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            listBox1.Items.Clear(); 
+        }
+
+        private void btnHistory_Click(object sender, EventArgs e)
+        {
+            listBox1.Items.Clear(); 
+
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = "SELECT Operacion, Resultado FROM HistorialCalculos";
+                SqlCommand cmd = new SqlCommand(query, con);
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    string operacion = reader["Operacion"].ToString();
+                    string resultado = reader["Resultado"].ToString();
+                    listBox1.Items.Add(operacion + " = " + resultado); 
+                }
+
+                reader.Close();
+            }
         }
     }
 }

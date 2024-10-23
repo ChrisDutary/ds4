@@ -50,8 +50,8 @@
             this.btn0 = new System.Windows.Forms.Button();
             this.txtNum = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.button19 = new System.Windows.Forms.Button();
-            this.button21 = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
+            this.btnHistory = new System.Windows.Forms.Button();
             this.btnRaiz = new System.Windows.Forms.Button();
             this.btnCuadrado = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
@@ -370,32 +370,35 @@
             this.label1.Size = new System.Drawing.Size(0, 30);
             this.label1.TabIndex = 21;
             // 
-            // button19
+            // btnDelete
             // 
-            this.button19.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.button19.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button19.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button19.ForeColor = System.Drawing.Color.IndianRed;
-            this.button19.Location = new System.Drawing.Point(264, 149);
-            this.button19.Name = "button19";
-            this.button19.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.button19.Size = new System.Drawing.Size(65, 41);
-            this.button19.TabIndex = 25;
-            this.button19.UseVisualStyleBackColor = false;
+            this.btnDelete.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnDelete.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDelete.ForeColor = System.Drawing.Color.IndianRed;
+            this.btnDelete.Location = new System.Drawing.Point(264, 149);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.btnDelete.Size = new System.Drawing.Size(65, 41);
+            this.btnDelete.TabIndex = 25;
+            this.btnDelete.Text = "DEL";
+            this.btnDelete.UseVisualStyleBackColor = false;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
-            // button21
+            // btnHistory
             // 
-            this.button21.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.button21.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button21.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button21.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.button21.Location = new System.Drawing.Point(182, 149);
-            this.button21.Name = "button21";
-            this.button21.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.button21.Size = new System.Drawing.Size(65, 41);
-            this.button21.TabIndex = 24;
-            this.button21.Text = "H";
-            this.button21.UseVisualStyleBackColor = false;
+            this.btnHistory.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnHistory.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnHistory.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHistory.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.btnHistory.Location = new System.Drawing.Point(182, 149);
+            this.btnHistory.Name = "btnHistory";
+            this.btnHistory.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.btnHistory.Size = new System.Drawing.Size(65, 41);
+            this.btnHistory.TabIndex = 24;
+            this.btnHistory.Text = "H";
+            this.btnHistory.UseVisualStyleBackColor = false;
+            this.btnHistory.Click += new System.EventHandler(this.btnHistory_Click);
             // 
             // btnRaiz
             // 
@@ -493,8 +496,8 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.button19);
-            this.Controls.Add(this.button21);
+            this.Controls.Add(this.btnDelete);
+            this.Controls.Add(this.btnHistory);
             this.Controls.Add(this.btnRaiz);
             this.Controls.Add(this.btnCuadrado);
             this.Controls.Add(this.label1);
@@ -554,8 +557,8 @@
         private System.Windows.Forms.Button btn0;
         private System.Windows.Forms.TextBox txtNum;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button19;
-        private System.Windows.Forms.Button button21;
+        private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.Button btnHistory;
         private System.Windows.Forms.Button btnRaiz;
         private System.Windows.Forms.Button btnCuadrado;
         private System.Windows.Forms.Label label2;
