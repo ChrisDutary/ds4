@@ -14,25 +14,18 @@ namespace Proyecto_1
 {
     public partial class Form1 : Form
     {
-
         double result = 0;
         string operation = "";
         bool isOperationPerformed = false;
-        bool isNegative = false;
         string connectionString = "Data Source=DESKTOP-539IR1D\\SQLEXPRESS;Initial Catalog=CalculadoraDB;Integrated Security=True;Encrypt=True;TrustServerCertificate=True;";
-
-
-
         public Form1()
         {
             InitializeComponent();
         }
-
         private void Form1_Load(object sender, EventArgs e)
         {
 
         }
-
         private void  button_click(object sender, EventArgs e)
         {
             Button button = (Button)sender;
@@ -59,7 +52,6 @@ namespace Proyecto_1
             if (txtNum.Text == "")
                 txtNum.Text = "0";
         }
-
         private void btnAC_Click(object sender, EventArgs e)
         {
             txtNum.Text = "0";
@@ -67,7 +59,6 @@ namespace Proyecto_1
             label1.Text = "";
 
         }
-
         private void operator_click(object sender, EventArgs e)
         {
             Button button = (Button)sender;
@@ -81,7 +72,6 @@ namespace Proyecto_1
                 isOperationPerformed = false;
                 return; 
             }
-
             if (result != 0)
             {
                 btnIgual.PerformClick();
@@ -96,7 +86,6 @@ namespace Proyecto_1
             }
             txtNum.Text = "";
         }
-
         private void btnIgual_Click(object sender, EventArgs e)
         {
             try
@@ -150,8 +139,6 @@ namespace Proyecto_1
 
                 result = Double.Parse(txtNum.Text); 
                 label1.Text = ""; 
-
-   
                 using (SqlConnection con = new SqlConnection(connectionString))
                 {
                     string query = "INSERT INTO HistorialCalculos (Operacion, Resultado) VALUES (@operacion, @resultado)";
@@ -167,7 +154,6 @@ namespace Proyecto_1
                 MessageBox.Show("Error: " + ex.Message);
             }
         }
-
         private void btnCuadrado_Click(object sender, EventArgs e)
         {
             operation = "x^2"; 
@@ -175,7 +161,6 @@ namespace Proyecto_1
             result = Double.Parse(txtNum.Text); 
             isOperationPerformed = true;
         }
-
         private void btnRaiz_Click(object sender, EventArgs e)
         {
             operation = "√"; 
@@ -183,21 +168,17 @@ namespace Proyecto_1
             result = Double.Parse(txtNum.Text); 
             isOperationPerformed = true;
         }
-
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
-
         private void btnDelete_Click(object sender, EventArgs e)
         {
             listBox1.Items.Clear(); 
         }
-
         private void btnHistory_Click(object sender, EventArgs e)
         {
             listBox1.Items.Clear(); 
-
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
