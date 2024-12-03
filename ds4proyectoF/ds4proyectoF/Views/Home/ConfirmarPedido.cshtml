@@ -1,0 +1,144 @@
+﻿
+@{
+    ViewBag.Title = "Confirmar Pedido";
+}
+
+<div class="confirmar-content">
+    <h2>Confirmar Pedido</h2>
+    <div id="resumen-pedido">
+        <h3>Resumen de tu pedido:</h3>
+        <div id="items-pedido"></div>
+        <div class="total">
+            <h3>Total: $<span id="total-precio">0.00</span></h3>
+        </div>
+    </div>
+    <div id="tipo-entrega"></div>
+    <button onclick="confirmarPedido()" class="confirmar-btn">Confirmar Pedido</button>
+</div>
+
+<style>
+    body {
+        background-color: #F7D794;
+    }
+
+    .confirmar-content {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 30px;
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .confirmar-btn {
+        background-color: #27ae60;
+        color: white;
+        padding: 15px 30px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 20px;
+        width: 100%;
+    }
+
+    #items-pedido {
+        margin: 20px 0;
+    }
+
+    .item {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .total {
+        margin-top: 20px;
+        text-align: right;
+    }
+</style>
+
+<script>
+    window.onload = function() {
+        mostrarResumenPedido();
+        mostrarTipoEntrega();
+    }
+
+    function mostrarResumenPedido() {
+        const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        const itemsContainer = document.getElementById('items-pedido');
+        let total = 0;
+
+        carrito.forEach(item => {
+            const itemHTML = `
+                <div class="item">
+                    <span>${item.nombre} x${item.cantidad}</span>
+                    <span>$${(item.precio * item.cantidad).toFixed(2)}</span>
+                </div>
+            `;
+            itemsContainer.innerHTML += itemHTML;
+            total += item.precio * item.cantidad;
+        });
+
+        document.getElementById('total-precio').textContent = total.toFixed(2);
+    }
+
+    function mostrarTipoEntrega() {
+        const tipo = localStorage.getItem('tipoEntrega');
+        const tipoEntregaDiv = document.getElementById('tipo-entrega');
+        tipoEntregaDiv.innerHTML = `<h3>Método de entrega: ${tipo === 'retiro' ? 'Retiro en Local' : 'Delivery'}</h3>`;
+    }
+
+    function confirmarPedido() {
+        localStorage.removeItem('carrito');
+        localStorage.removeItem('tipoEntrega');
+        alert('¡Pedido confirmado! Gracias por tu compra.');
+        window.location.href = '/Home/Index';
+    }
+
+    function mostrarResumenPedido() {
+        const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        const itemsContainer = document.getElementById('items-pedido');
+        let total = 0;
+
+        carrito.forEach(item => {
+            const itemHTML = `
+            <div class="item">
+                <span>${item.nombre} x${item.cantidad}</span>
+                <span>$${(item.precio * item.cantidad).toFixed(2)}</span>
+            </div>
+        `;
+            itemsContainer.innerHTML += itemHTML;
+            total += item.precio * item.cantidad;
+        });
+
+        if (localStorage.getItem('tipoEntrega') === 'delivery') {
+            const cargoDelivery = parseFloat(localStorage.getItem('cargoDelivery'));
+            itemsContainer.innerHTML += `
+            <div class="item">
+                <span>Cargo por delivery</span>
+                <span>$${cargoDelivery.toFixed(2)}</span>
+            </div>
+        `;
+            total += cargoDelivery;
+        }
+
+        document.getElementById('total-precio').textContent = total.toFixed(2);
+    }
+
+    function mostrarTipoEntrega() {
+        const tipo = localStorage.getItem('tipoEntrega');
+        const direccion = localStorage.getItem('direccionEntrega');
+        const tipoEntregaDiv = document.getElementById('tipo-entrega');
+
+        if (tipo === 'delivery') {
+            tipoEntregaDiv.innerHTML = `
+            <h3>Método de entrega: Delivery</h3>
+            <p>Dirección: ${direccion}</p>
+        `;
+        } else {
+            tipoEntregaDiv.innerHTML = '<h3>Método de entrega: Retiro en Local</h3>';
+        }
+    }
+</script>

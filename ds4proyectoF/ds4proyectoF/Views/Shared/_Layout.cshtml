@@ -1,0 +1,155 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Mary'sBrownies&Cookies</title>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="hamburger-icon">
+            ☰
+        </div>
+        <nav>
+            <ul>
+                <li>@Html.ActionLink("Inicio", "Index", "Home")</li>
+                <li>@Html.ActionLink("Menú", "Menu", "Home")</li>
+                <li>@Html.ActionLink("Carrito", "Carrito", "Home")</li>
+                <li>@Html.ActionLink("Opciones de Entrega", "OpcionesEntrega", "Home")</li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="content">
+        @RenderBody()
+    </div>
+
+    <div id="notification" style="display: none;" class="notification">
+        <p id="notification-text"></p>
+    </div>
+
+    <style>
+       body {
+           margin: 0;
+           padding: 0;
+       }
+
+       .sidebar {
+           position: fixed;
+           left: -180px;
+           top: 0;
+           width: 200px;
+           height: 100vh;
+           background-color: #8B2E36;
+           transition: all 0.3s ease;
+           padding: 20px;
+           z-index: 1000;
+       }
+
+       .sidebar:hover {
+           left: 0;
+       }
+
+       .sidebar ul {
+           list-style: none;
+           padding: 0;
+           margin-top: 20px;
+       }
+
+       .sidebar li {
+           margin: 10px 0;
+       }
+
+       .sidebar a {
+           color: white;
+           text-decoration: none;
+           padding: 10px;
+           display: block;
+           font-size: 16px;
+       }
+
+       .sidebar a:hover {
+           background-color: rgba(255,255,255,0.1);
+       }
+
+       .hamburger-icon {
+           position: absolute;
+           top: 20px;
+           left: 200px;
+           width: 25px;
+           height: 25px;
+           background-color: #8B2E36;
+           color: white;
+           font-size: 20px;
+           text-align: center;
+           line-height: 20px;
+           cursor: pointer;
+           border-radius: 3px;
+       }
+
+       .sidebar:hover .hamburger-icon {
+           left: -30px;
+       }
+
+       .content {
+           margin-left: 40px;
+           padding: 20px;
+       }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #27ae60;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+
+    </style>
+
+    <script>
+        function agregarAlCarrito(nombre, precio) {
+            let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
+            const productoExistente = carrito.find(item => item.nombre === nombre);
+
+            if (productoExistente) {
+                productoExistente.cantidad += 1;
+                productoExistente.total = productoExistente.precio * productoExistente.cantidad;
+            } else {
+                carrito.push({
+                    nombre: nombre,
+                    precio: precio,
+                    cantidad: 1,
+                    total: precio
+                });
+            }
+
+            localStorage.setItem('carrito', JSON.stringify(carrito));
+            mostrarNotificacion(`${nombre} agregado al carrito`);
+        }
+
+        function mostrarNotificacion(mensaje) {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notification-text');
+
+            notificationText.textContent = mensaje;
+            notification.style.display = 'block';
+            notification.style.opacity = '1';
+
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 500);
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

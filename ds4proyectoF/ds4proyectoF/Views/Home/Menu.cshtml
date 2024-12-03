@@ -1,0 +1,150 @@
+﻿
+@{
+    ViewBag.Title = "Menú";
+}
+
+<div class="menu-container">
+    <h2>Menú de Productos</h2>
+    <div class="productos-lista">
+        <div class="producto-item">
+            <span class="nombre">Flan</span>
+            <div class="precios">
+                <div class="precio-opcion">
+                    <span class="precio" style="text-align: right; margin-right: 50px;">Precio por pedazo: $5.00</span>
+                    <button class="agregar-btn" onclick="agregarAlCarrito('Flan (Pedazo)', 5.00)">Agregar pedazo</button>
+                </div>
+                <div class="precio-opcion" style="margin-top: 15px;">
+                    <span class="precio" style="text-align: right; margin-right: 50px;">Precio entero: $33.00</span>
+                    <button class="agregar-btn" onclick="agregarAlCarrito('Flan (Entero)', 33.00)">Agregar entero</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="producto-item">
+            <span class="nombre">Galleta Chocolate</span>
+            <span class="precio">Precio por pedazo: $1.00</span>
+            <button class="agregar-btn" onclick="agregarAlCarrito('Galleta Chocolate', 1.00)">Agregar al carrito</button>
+        </div>
+
+        <div class="producto-item">
+            <span class="nombre">Galleta Red Velvet</span>
+            <span class="precio">Precio por pedazo: $1.00</span>
+            <button class="agregar-btn" onclick="agregarAlCarrito('Galleta Red Velvet', 1.00)">Agregar al carrito</button>
+        </div>
+
+        <div class="producto-item">
+            <span class="nombre">Galleta M&M</span>
+            <span class="precio">Precio por pedazo: $1.00</span>
+            <button class="agregar-btn" onclick="agregarAlCarrito('Galleta M&M', 1.00)">Agregar al carrito</button>
+        </div>
+
+        <div class="producto-item">
+            <span class="nombre">Galleta Dulce de Leche</span>
+            <span class="precio">Precio por pedazo: $1.00</span>
+            <button class="agregar-btn" onclick="agregarAlCarrito('Galleta Dulce de Leche', 1.00)">Agregar al carrito</button>
+        </div>
+
+        <div class="producto-item">
+            <span class="nombre">Brownie</span>
+            <span class="precio">Precio por pedazo: $1.50</span>
+            <button class="agregar-btn" onclick="agregarAlCarrito('Brownie', 1.50)">Agregar al carrito</button>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #F7D794;
+    }
+
+    .menu-container {
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 30px;
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+        text-align: center;
+        color: #2C3E50;
+        margin-bottom: 30px;
+    }
+
+    .productos-lista {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .producto-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .nombre {
+        font-weight: bold;
+        width: 200px;
+    }
+
+    .agregar-btn {
+        background-color: #27ae60;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        .agregar-btn:hover {
+            background-color: #219a52;
+        }
+    .precio {
+        color: #666;
+        flex: 1;
+        text-align: right; /* Alineamos el texto del precio a la derecha */
+        margin-right: 20px; /* Espaciamos hacia la derecha */
+    }
+
+    .agregar-btn {
+        background-color: #27ae60;
+        color: white;
+        padding: 10px 25px; /* Ajustamos el tamaño del botón para hacerlo más delgado */
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        font-size: 16px; /* Aumentamos el tamaño del texto dentro del botón */
+        text-align: center;
+        min-width: 150px; /* Establecemos un ancho mínimo para que todos los botones tengan el mismo tamaño */
+    }
+
+    .producto-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        border-bottom: 1px solid #eee;
+        gap: 10px; /* Añadimos un espacio uniforme entre los elementos */
+    }
+    .precios {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    .precio-opcion {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        width: 100%;
+    }
+
+
+
+</style>

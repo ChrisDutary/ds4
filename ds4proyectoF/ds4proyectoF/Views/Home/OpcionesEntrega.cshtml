@@ -1,0 +1,131 @@
+﻿<div class="entrega-content">
+    <h2>Selecciona tu opción de entrega</h2>
+    <div class="opciones">
+        <div class="opcion-card" onclick="seleccionarOpcion('retiro')">
+            <h3>Retiro en Local</h3>
+            <p>Recoge tu pedido en nuestra tienda</p>
+            <p class="cargo">Sin cargo adicional</p>
+        </div>
+
+        <div class="opcion-card" onclick="mostrarFormularioDelivery()">
+            <h3>Delivery</h3>
+            <p>Te lo llevamos a tu dirección</p>
+            <p class="cargo">Cargo adicional: $3.50</p>
+        </div>
+    </div>
+
+    <div id="formulario-delivery" style="display: none;">
+        <input type="text" id="direccion" placeholder="Dirección de entrega">
+        <button onclick="confirmarDelivery()" class="confirmar-btn">Confirmar Delivery</button>
+    </div>
+</div>
+
+<script>
+   function seleccionarOpcion(tipo) {
+       localStorage.setItem('tipoEntrega', tipo);
+       localStorage.setItem('cargoDelivery', '0');
+       window.location.href = '@Url.Action("ConfirmarPedido", "Home")';
+   }
+
+   function mostrarFormularioDelivery() {
+       document.getElementById('formulario-delivery').style.display = 'block';
+   }
+
+   function confirmarDelivery() {
+       const direccion = document.getElementById('direccion').value;
+       if (!direccion) {
+           alert('Por favor ingresa una dirección de entrega');
+           return;
+       }
+       localStorage.setItem('tipoEntrega', 'delivery');
+       localStorage.setItem('direccionEntrega', direccion);
+       localStorage.setItem('cargoDelivery', '3.50');
+       window.location.href = '@Url.Action("ConfirmarPedido", "Home")';
+   }
+</script>
+
+<style>
+    body {
+        background-color: #F7D794;
+    }
+
+    .entrega-content {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 30px;
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+
+    h2 {
+        color: #2C3E50;
+        margin-bottom: 30px;
+    }
+
+    .opciones {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        margin-top: 30px;
+    }
+
+    .opcion-card {
+        width: 250px;
+        padding: 25px;
+        border: 2px solid #ddd;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+        .opcion-card:hover {
+            border-color: #27ae60;
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+
+        .opcion-card h3 {
+            color: #2C3E50;
+            margin-bottom: 15px;
+        }
+
+        .opcion-card p {
+            color: #666;
+            margin: 10px 0;
+        }
+
+    .cargo {
+        font-weight: bold;
+        margin-top: 20px;
+    }
+
+    #formulario-delivery {
+        margin-top: 30px;
+    }
+
+    input {
+        width: 80%;
+        padding: 12px;
+        margin: 10px 0;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 16px;
+    }
+
+    .confirmar-btn {
+        background-color: #27ae60;
+        color: white;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-top: 10px;
+    }
+
+        .confirmar-btn:hover {
+            background-color: #219a52;
+        }
+</style>

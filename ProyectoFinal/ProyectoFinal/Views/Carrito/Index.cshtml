@@ -1,0 +1,99 @@
+﻿@using ProyectoFinal.Models
+@model IEnumerable<DetallePedido>
+
+@{
+    ViewBag.Title = "Carrito de Compras";
+    decimal total = Model?.Sum(item => item.Cantidad * item.PrecioUnitario) ?? 0;
+}
+
+<h2>Carrito de Compras</h2>
+
+@if (Model == null || !Model.Any())
+{
+    <div class="alert alert-info">
+        <p>Tu carrito está vacío.</p>
+        @Html.ActionLink("Ver Productos", "Index", "Productos", null, new { @class = "btn btn-primary" })
+    </div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Precio Unitario</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Producto.Nombre</td>
+                        <td>$@item.PrecioUnitario.ToString("N2")</td>
+                        <td>
+                            <input type="number"
+                                   class="form-control cantidad-producto"
+                                   value="@item.Cantidad"
+                                   min="1"
+                                   max="@item.Producto.Stock"
+                                   data-producto-id="@item.ProductoID"
+                                   style="width: 80px" />
+                        </td>
+                        <td>$@((item.Cantidad * item.PrecioUnitario).ToString("N2"))</td>
+                        <td>
+                            @using (Html.BeginForm("EliminarDelCarrito", "Carrito", FormMethod.Post, new { @class = "form-inline" }))
+                            {
+                                <input type="hidden" name="productoId" value="@item.ProductoID" />
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    <span class="glyphicon glyphicon-trash"></span> Eliminar
+                                </button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3" class="text-right"><strong>Total:</strong></td>
+                    <td><strong>$@total.ToString("N2")</strong></td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            @Html.ActionLink("Seguir Comprando", "Index", "Productos", null, new { @class = "btn btn-default" })
+        </div>
+        <div class="col-md-6 text-right">
+            @Html.ActionLink("Proceder al Pago", "Create", "Pedidos", null, new { @class = "btn btn-success" })
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.cantidad-producto').change(function () {
+                var productoId = $(this).data('producto-id');
+                var cantidad = $(this).val();
+
+                $.post('@Url.Action("ActualizarCantidad", "Carrito")', {
+                    productoId: productoId,
+                    cantidad: cantidad
+                })
+                .done(function () {
+                    location.reload();
+                })
+                .fail(function () {
+                    alert('Error al actualizar la cantidad');
+                });
+            });
+        });
+    </script>
+}

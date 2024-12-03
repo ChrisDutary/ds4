@@ -1,0 +1,96 @@
+﻿@{
+    ViewBag.Title = "Catálogo de Productos";
+}
+
+<div class="container">
+    <h2 class="text-center" style="margin-bottom: 30px;">Catálogo de Productos</h2>
+
+    <!-- Filtros de categoría -->
+    <div class="row" style="margin-bottom: 20px;">
+        <div class="col-md-12">
+            <div class="btn-group">
+                <button type="button" class="btn btn-default active">Todos</button>
+                <button type="button" class="btn btn-default">Galletas</button>
+                <button type="button" class="btn btn-default">Dulces</button>
+                <button type="button" class="btn btn-default">Postres</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Producto 1 -->
+        <div class="col-md-4" style="margin-bottom: 20px;">
+            <div class="panel panel-default">
+                <div class="panel-heading text-center">
+                    <h3 class="panel-title">Galletas de Chocolate</h3>
+                </div>
+                <div class="panel-body text-center">
+                    <img src="~/Content/Images/Galletascholate.png" alt="Galletas" class="img-responsive center-block" style="max-height:200px;" />
+                    <div class="caption">
+                        <p>Deliciosas galletas con trozos de chocolate.</p>
+                        <p><strong>Precio: </strong>$2.50</p>
+                        <p><strong>Stock: </strong>100 unidades</p>
+                        <div class="form-group">
+                            <label>Cantidad:</label>
+                            <input type="number" class="form-control input-sm center-block" style="width:80px;" min="1" max="100" value="1">
+                        </div>
+                        <p>
+                            <a href="#" class="btn btn-primary">Ver Detalles</a>
+                            <a href="#" class="btn btn-success">Agregar al Carrito</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Producto 2 -->
+        <div class="col-md-4" style="margin-bottom: 20px;">
+            <div class="panel panel-default">
+                <div class="panel-heading text-center">
+                    <h3 class="panel-title">Brownie</h3>
+                </div>
+                <div class="panel-body text-center">
+                    <img src="~/Content/Images/Brownie.jpg" alt="Brownie" class="img-responsive center-block" style="max-height:200px;" />
+                    <div class="caption">
+                        <p>Brownie húmedo de chocolate con nueces.</p>
+                        <p><strong>Precio: </strong>$2.50</p>
+                        <p><strong>Stock: </strong>75 unidades</p>
+                        <div class="form-group">
+                            <label>Cantidad:</label>
+                            <input type="number" class="form-control input-sm center-block" style="width:80px;" min="1" max="75" value="1">
+                        </div>
+                        <p>
+                            <a href="#" class="btn btn-primary">Ver Detalles</a>
+                            <a href="#" class="btn btn-success">Agregar al Carrito</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Producto 3 -->
+        <div class="col-md-4" style="margin-bottom: 20px;">
+            <div class="panel panel-default">
+                <div class="panel-heading text-center">
+                    <h3 class="panel-title">Flan Casero</h3>
+                </div>
+                <div class="panel-body text-center">
+                    <img src="~/Content/Images/Flan.png" alt="Flan" class="img-responsive center-block" style="max-height:200px;" />
+                    <div class="caption">
+                        <p>Suave flan con cobertura de caramelo.</p>
+                        <p><strong>Precio: </strong>$3.50</p>
+                        <p><strong>Stock: </strong>50 unidades</p>
+                        <div class="form-group">
+                            <label>Cantidad:</label>
+                            <input type="number" class="form-control input-sm center-block" style="width:80px;" min="1" max="50" value="1">
+                        </div>
+                        <p>
+                            <a href="#" class="btn btn-primary">Ver Detalles</a>
+                            <a href="#" class="btn btn-success">Agregar al Carrito</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,142 @@
+﻿@{
+    ViewBag.Title = "Carrito";
+}
+
+<div class="carrito-content">
+    <h2>Tu Carrito de Compras</h2>
+    <div id="items-carrito">
+        <!-- Los productos se insertarán aquí dinámicamente -->
+    </div>
+
+    <div class="carrito-total">
+        <div class="total-info">
+            <p>Total: $<span id="total-precio">0.00</span></p>
+        </div>
+        <button onclick="location.href='@Url.Action("OpcionesEntrega", "Home")'" class="pagar-btn">Proceder al pago</button>
+    </div>
+</div>
+
+<script>
+    window.onload = function () {
+        mostrarCarrito();
+    }
+
+    function mostrarCarrito() {
+        const itemsContainer = document.getElementById('items-carrito');
+        const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        let total = 0;
+
+        itemsContainer.innerHTML = '';
+
+        if (carrito.length === 0) {
+            itemsContainer.innerHTML = '<p class="carrito-vacio">No hay productos en el carrito</p>';
+            return;
+        }
+
+        carrito.forEach((item, index) => {
+            const itemHTML = `
+            <div class="item">
+                <span class="item-nombre">${item.nombre}</span>
+                <span class="item-cantidad">Cantidad: ${item.cantidad}</span>
+                <span class="item-precio">$${(item.precio * item.cantidad).toFixed(2)}</span>
+                <button onclick="eliminarItem(${index})" class="eliminar-btn">×</button>
+            </div>
+        `;
+            itemsContainer.innerHTML += itemHTML;
+            total += (item.precio * item.cantidad);
+        });
+
+        document.getElementById('total-precio').textContent = total.toFixed(2);
+    }
+
+    function eliminarItem(index) {
+        let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        carrito.splice(index, 1);
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+        mostrarCarrito();
+    }
+</script>
+
+<style>
+    body {
+        background-color: #F7D794;
+    }
+
+    .carrito-content {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 30px;
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+        text-align: center;
+        color: #2C3E50;
+        margin-bottom: 30px;
+    }
+
+    .item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        margin: 10px 0;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+    }
+
+    .item-nombre {
+        font-weight: bold;
+        flex: 1;
+    }
+
+    .item-precio {
+        margin: 0 20px;
+    }
+
+    .eliminar-btn {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+        cursor: pointer;
+    }
+
+    .carrito-total {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 2px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .total-info {
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+
+    .pagar-btn {
+        background-color: #27ae60;
+        color: white;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+        .pagar-btn:hover {
+            background-color: #219a52;
+        }
+
+    .carrito-vacio {
+        text-align: center;
+        color: #666;
+        padding: 20px;
+    }
+</style>

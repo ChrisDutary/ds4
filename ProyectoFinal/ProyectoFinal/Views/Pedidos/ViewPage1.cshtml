@@ -1,0 +1,146 @@
+﻿@using ProyectoFinal.Models
+@model Pedido
+
+@{
+    ViewBag.Title = "Finalizar Pedido";
+    var carrito = Session["Carrito"] as List<DetallePedido>;
+    var total = carrito?.Sum(item => item.Cantidad * item.PrecioUnitario) ?? 0;
+}
+
+<h2>Finalizar Pedido</h2>
+
+@if (carrito == null || !carrito.Any())
+{
+    <div class="alert alert-warning">
+        <p>No hay productos en el carrito.</p>
+        @Html.ActionLink("Volver al Catálogo", "Index", "Productos", null, new { @class = "btn btn-primary" })
+    </div>
+}
+else
+{
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Información de Contacto</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Usuario.Nombre, "Nombre Completo")
+                            @Html.TextBoxFor(m => m.Usuario.Nombre, new { @class = "form-control", required = "required" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Usuario.Email, "Correo Electrónico")
+                            @Html.TextBoxFor(m => m.Usuario.Email, new { @class = "form-control", type = "email", required = "required" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Usuario.Telefono, "Teléfono")
+                            @Html.TextBoxFor(m => m.Usuario.Telefono, new { @class = "form-control", required = "required" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Método de Entrega</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>
+                                @Html.RadioButtonFor(m => m.TipoEntrega, "Delivery", new { @class = "delivery-option" }) Delivery
+                            </label>
+                            <br />
+                            <label>
+                                @Html.RadioButtonFor(m => m.TipoEntrega, "Recojo", new { @class = "delivery-option" }) Recojo en Tienda
+                            </label>
+                        </div>
+
+                        <div id="direccionEntrega" class="form-group" style="display: none;">
+                            @Html.LabelFor(m => m.DireccionEntrega, "Dirección de Entrega")
+                            @Html.TextAreaFor(m => m.DireccionEntrega, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Resumen del Pedido</h3>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in carrito)
+                                {
+                                    <tr>
+                                        <td>@item.Producto.Nombre</td>
+                                        <td>@item.Cantidad</td>
+                                        <td>$@item.PrecioUnitario.ToString("N2")</td>
+                                        <td>$@((item.Cantidad * item.PrecioUnitario).ToString("N2"))</td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="3" class="text-right"><strong>Total:</strong></td>
+                                    <td><strong>$@total.ToString("N2")</strong></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Método de Pago</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>
+                                <input type="radio" name="metodoPago" value="efectivo" checked /> Pago en Efectivo
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-right">
+                    @Html.ActionLink("Volver al Carrito", "Index", "Carrito", null, new { @class = "btn btn-default" })
+                    <button type="submit" class="btn btn-success">
+                        <i class="glyphicon glyphicon-ok"></i> Confirmar Pedido
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('.delivery-option').change(function () {
+                if ($(this).val() === 'Delivery') {
+                    $('#direccionEntrega').show();
+                    $('#DireccionEntrega').prop('required', true);
+                } else {
+                    $('#direccionEntrega').hide();
+                    $('#DireccionEntrega').prop('required', false);
+                }
+            });
+        });
+    </script>
+}
