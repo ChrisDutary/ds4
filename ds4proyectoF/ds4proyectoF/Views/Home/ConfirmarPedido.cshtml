@@ -90,12 +90,41 @@
         tipoEntregaDiv.innerHTML = `<h3>Método de entrega: ${tipo === 'retiro' ? 'Retiro en Local' : 'Delivery'}</h3>`;
     }
 
-    function confirmarPedido() {
-        localStorage.removeItem('carrito');
-        localStorage.removeItem('tipoEntrega');
-        alert('¡Pedido confirmado! Gracias por tu compra.');
-        window.location.href = '/Home/Index';
-    }
+function confirmarPedido() {
+    const carrito = JSON.parse(localStorage.getItem('carrito'));
+    const tipoEntrega = localStorage.getItem('tipoEntrega');
+    const direccion = localStorage.getItem('direccionEntrega') || '';
+
+    fetch('@Url.Action("GuardarPedido", "Home")', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            nombreCliente: "Cliente",
+            productos: JSON.stringify(carrito),
+            total: parseFloat(document.getElementById('total-precio').textContent),
+            retiroLocal: tipoEntrega === 'retiro',
+            delivery: tipoEntrega === 'delivery',
+            direccion: direccion
+        })
+    })
+    .then(response => {
+        if (response.ok) {
+            localStorage.removeItem('carrito');
+            localStorage.removeItem('tipoEntrega');
+            localStorage.removeItem('direccionEntrega');
+            alert('¡Pedido confirmado!');
+            window.location.href = '/Home/Index';
+        } else {
+            throw new Error('Error al guardar el pedido');
+        }
+    })
+    .catch(error => {
+        alert('Error al guardar el pedido');
+    });
+}
+
 
     function mostrarResumenPedido() {
         const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
@@ -125,20 +154,5 @@
         }
 
         document.getElementById('total-precio').textContent = total.toFixed(2);
-    }
-
-    function mostrarTipoEntrega() {
-        const tipo = localStorage.getItem('tipoEntrega');
-        const direccion = localStorage.getItem('direccionEntrega');
-        const tipoEntregaDiv = document.getElementById('tipo-entrega');
-
-        if (tipo === 'delivery') {
-            tipoEntregaDiv.innerHTML = `
-            <h3>Método de entrega: Delivery</h3>
-            <p>Dirección: ${direccion}</p>
-        `;
-        } else {
-            tipoEntregaDiv.innerHTML = '<h3>Método de entrega: Retiro en Local</h3>';
-        }
     }
 </script>

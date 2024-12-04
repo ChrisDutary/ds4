@@ -7,45 +7,63 @@
     <h2>Menú de Productos</h2>
     <div class="productos-lista">
         <div class="producto-item">
-            <span class="nombre">Flan</span>
+            <div class="producto-info">
+                <img src="~/Content/Images/Flan.png" alt="Flan" class="producto-imagen" />
+                <span class="nombre">Flan</span>
+            </div>
             <div class="precios">
                 <div class="precio-opcion">
-                    <span class="precio" style="text-align: right; margin-right: 50px;">Precio por pedazo: $5.00</span>
+                    <span class="precio">Precio por pedazo: $5.00</span>
                     <button class="agregar-btn" onclick="agregarAlCarrito('Flan (Pedazo)', 5.00)">Agregar pedazo</button>
                 </div>
                 <div class="precio-opcion" style="margin-top: 15px;">
-                    <span class="precio" style="text-align: right; margin-right: 50px;">Precio entero: $33.00</span>
+                    <span class="precio">Precio entero: $33.00</span>
                     <button class="agregar-btn" onclick="agregarAlCarrito('Flan (Entero)', 33.00)">Agregar entero</button>
                 </div>
             </div>
         </div>
 
         <div class="producto-item">
-            <span class="nombre">Galleta Chocolate</span>
+            <div class="producto-info">
+                <img src="~/Content/Images/galletachocolate.jpg" alt="Galleta Chocolate" class="producto-imagen" />
+                <span class="nombre">Galleta Chocolate</span>
+            </div>
             <span class="precio">Precio por pedazo: $1.00</span>
             <button class="agregar-btn" onclick="agregarAlCarrito('Galleta Chocolate', 1.00)">Agregar al carrito</button>
         </div>
 
         <div class="producto-item">
-            <span class="nombre">Galleta Red Velvet</span>
+            <div class="producto-info">
+                <img src="~/Content/Images/galletaredvelvet.jpg" alt="Galleta Red Velvet" class="producto-imagen" />
+                <span class="nombre">Galleta Red Velvet</span>
+            </div>
             <span class="precio">Precio por pedazo: $1.00</span>
             <button class="agregar-btn" onclick="agregarAlCarrito('Galleta Red Velvet', 1.00)">Agregar al carrito</button>
         </div>
 
         <div class="producto-item">
-            <span class="nombre">Galleta M&M</span>
+            <div class="producto-info">
+                <img src="~/Content/Images/m&m.jpg" alt="Galleta M&M" class="producto-imagen" />
+                <span class="nombre">Galleta M&M</span>
+            </div>
             <span class="precio">Precio por pedazo: $1.00</span>
             <button class="agregar-btn" onclick="agregarAlCarrito('Galleta M&M', 1.00)">Agregar al carrito</button>
         </div>
 
         <div class="producto-item">
-            <span class="nombre">Galleta Dulce de Leche</span>
+            <div class="producto-info">
+                <img src="~/Content/Images/galletadulcedeleche.jpg" alt="Galleta Dulce de Leche" class="producto-imagen" />
+                <span class="nombre">Galleta Dulce de Leche</span>
+            </div>
             <span class="precio">Precio por pedazo: $1.00</span>
             <button class="agregar-btn" onclick="agregarAlCarrito('Galleta Dulce de Leche', 1.00)">Agregar al carrito</button>
         </div>
 
         <div class="producto-item">
-            <span class="nombre">Brownie</span>
+            <div class="producto-info">
+                <img src="~/Content/Images/Brownie.jpg" alt="Brownie" class="producto-imagen" />
+                <span class="nombre">Brownie</span>
+            </div>
             <span class="precio">Precio por pedazo: $1.50</span>
             <button class="agregar-btn" onclick="agregarAlCarrito('Brownie', 1.50)">Agregar al carrito</button>
         </div>
@@ -55,6 +73,17 @@
 <style>
     body {
         background-color: #F7D794;
+    }
+    .producto-imagen {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+    .producto-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
     }
 
     .menu-container {
@@ -88,22 +117,13 @@
 
     .nombre {
         font-weight: bold;
-        width: 200px;
+        width: 350px;
     }
 
-    .agregar-btn {
-        background-color: #27ae60;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
+     .agregar-btn:hover {
+        background-color: #219a52;
+      }
 
-        .agregar-btn:hover {
-            background-color: #219a52;
-        }
     .precio {
         color: #666;
         flex: 1;
@@ -136,6 +156,7 @@
         display: flex;
         flex-direction: column;
         flex: 1;
+        text-align-last: justify;
     }
 
     .precio-opcion {
@@ -143,6 +164,7 @@
         justify-content: flex-end;
         align-items: center;
         width: 100%;
+        text-align-last: justify;
     }
 
 

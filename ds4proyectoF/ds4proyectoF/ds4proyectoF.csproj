@@ -146,7 +146,14 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\Images\Brownie.jpg" />
+    <Content Include="Content\Images\Flan.png" />
     <Content Include="Content\Images\fondo2.jpg" />
+    <Content Include="Content\Images\galletachocolate.jpg" />
+    <Content Include="Content\Images\galletadulcedeleche.jpg" />
+    <Content Include="Content\Images\galletaredvelvet.jpg" />
+    <Content Include="Content\Images\Galletascholate.png" />
+    <Content Include="Content\Images\m&amp;m.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -156,7 +163,6 @@
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Content\Images\Fondo1.webp" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />

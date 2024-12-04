@@ -13,6 +13,7 @@ namespace ds4proyectoF.Models
         public decimal Total { get; set; }
         public bool RetiroLocal { get; set; }
         public bool Delivery { get; set; }
+
         public string Ubicacion { get; set; }
     }
 }
